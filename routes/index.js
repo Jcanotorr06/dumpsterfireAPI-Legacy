@@ -13,7 +13,7 @@ const Post = {
 const routes = [
     {
         method: 'GET',
-        url: '/api/posts',
+        url: '/posts',
         handler: postController.getPosts,
         schema: {
             response: {
@@ -26,7 +26,7 @@ const routes = [
     },
     {
         method: 'GET',
-        url: '/api/posts/:id',
+        url: '/posts/:id',
         handler: postController.getSinglePost,
         schema: {
             response: {
@@ -36,7 +36,7 @@ const routes = [
     },
     {
         method: 'POST',
-        url: '/api/posts',
+        url: '/posts',
         handler: postController.addPost,
         schema: {
             body: {
