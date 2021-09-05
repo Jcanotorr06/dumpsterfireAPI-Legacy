@@ -1,0 +1,22 @@
+{
+  "name": "dumpsterfireAPI",
+  "version": "1.0.0",
+  "description": "Dumpster Fire Blog Site API",
+  "main": "index.js",
+  "author": "Joseph Cano",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "fastify": "^3.20.2",
+    "fastify-cors": "^6.0.2",
+    "fastify-swagger": "^4.9.1",
+    "mongoose": "^6.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
