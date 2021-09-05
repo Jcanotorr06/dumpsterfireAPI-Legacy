@@ -1,36 +1,58 @@
-require('dotenv').config()
+const postController = require('../controller/postController')
 
-const fastify = require('fastify')({ logger: false })
-const mongoose = require('mongoose')
-const routes = require('./routes')
-
-fastify.register(require('fastify-cors'), {
-    origin: 'http://localhost/'
-})
-
-fastify.register(require('fastify-swagger'), {
-    exposeRoute: true,
-    routePrefix: '/docs',
-    swagger: {
-        info: {title: 'fastify-api'}
+const Post = {
+    type: 'object',
+    properties: {
+        _id: {type: 'string'},
+        title: {type: 'string'},
+        body: {type: 'string'},
+        createdAt: {type: 'string'}
     }
-})
-
-mongoose.connect(`mongodb+srv://abcd123:${process.env.MONGO_PASSWORD}@cluster0.fj11r.mongodb.net/dumpster_fire?retryWrites=true&w=majority`)
-    .then(() => console.log('Connected to Database'))
-    .catch(err => console.log(err))
-
-routes.map(route => {
-    fastify.route(route)
-})
-
-
-const start = async () => {
-  try {
-    await fastify.listen(process.env.PORT || 3000, '0.0.0.0')
-  } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
 }
-start()
+
+const routes = [
+    {
+        method: 'GET',
+        url: '/posts',
+        handler: postController.getPosts,
+        schema: {
+            response: {
+                200: {
+                    type: 'array',
+                    items: Post
+                }
+            }
+        }
+    },
+    {
+        method: 'GET',
+        url: '/posts/:id',
+        handler: postController.getSinglePost,
+        schema: {
+            response: {
+                200: Post
+            }
+        }
+    },
+    {
+        method: 'POST',
+        url: '/posts',
+        handler: postController.addPost,
+        schema: {
+            body: {
+                type: 'object',
+                required: ['title', 'body'],
+                properties: {
+                    title: {type: 'string'},
+                    body: {type: 'string'}
+                }
+            },
+            response: {
+                200: Post
+            }
+        }
+    },
+]
+
+
+module.exports = routes
